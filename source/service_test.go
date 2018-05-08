@@ -1035,7 +1035,7 @@ func TestHeadlessServices(t *testing.T) {
 		labels          map[string]string
 		annotations     map[string]string
 		clusterIP       string
-		podIP           string
+		hostIP          string
 		selector        map[string]string
 		lbs             []string
 		podnames        []string
@@ -1187,8 +1187,8 @@ func TestHeadlessServices(t *testing.T) {
 						Annotations: tc.annotations,
 					},
 					Status: v1.PodStatus{
-						PodIP: tc.podIP,
-						Phase: tc.phases[i],
+						HostIP: tc.hostIP,
+						Phase:  tc.phases[i],
 					},
 				}
 

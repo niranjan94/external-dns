@@ -154,13 +154,13 @@ func (sc *serviceSource) extractHeadlessEndpoints(svc *v1.Service, hostname stri
 			headlessDomain = v.Spec.Hostname + "." + headlessDomain
 		}
 
-		log.Debugf("Generating matching endpoint %s with PodIP %s", headlessDomain, v.Status.PodIP)
+		log.Debugf("Generating matching endpoint %s with HostIP %s", headlessDomain, v.Status.HostIP)
 		// To reduce traffice on the DNS API only add record for running Pods. Good Idea?
 		if v.Status.Phase == v1.PodRunning {
 			if ttl.IsConfigured() {
-				endpoints = append(endpoints, endpoint.NewEndpointWithTTL(headlessDomain, endpoint.RecordTypeA, ttl, v.Status.PodIP))
+				endpoints = append(endpoints, endpoint.NewEndpointWithTTL(headlessDomain, endpoint.RecordTypeA, ttl, v.Status.HostIP))
 			} else {
-				endpoints = append(endpoints, endpoint.NewEndpoint(headlessDomain, endpoint.RecordTypeA, v.Status.PodIP))
+				endpoints = append(endpoints, endpoint.NewEndpoint(headlessDomain, endpoint.RecordTypeA, v.Status.HostIP))
 			}
 		} else {
 			log.Debugf("Pod %s is not in running phase", v.Spec.Hostname)
